@@ -7,7 +7,7 @@ package com.mnuocom.javapenetrateinto.runtime;
  * @author saxon
  */
 public class RuntimeDemo1 {
-
+	private int i;
 	/**
 	 * 
 	 */
