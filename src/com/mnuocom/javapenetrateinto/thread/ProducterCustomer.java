@@ -4,8 +4,8 @@
 package com.mnuocom.javapenetrateinto.thread;
 
 /**
- * 这是模仿生产者和消费者模型:
- * 	用于了解线程间的通信
+ * <p>这是模仿生产者和消费者模型:<br>
+ * 	用于了解线程间的通信</p>
  * @author saxon
  */
 public class ProducterCustomer {

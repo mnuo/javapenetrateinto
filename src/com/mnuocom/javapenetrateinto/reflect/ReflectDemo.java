@@ -12,9 +12,9 @@ import java.lang.reflect.Method;
  * <h4>反射:</h4>
  * <br>不通过new关键字创建对象,而是通过Class类对象创建
  * 1,获取Class对象的三种方法:<br>
- * 		1>对象.getClass();<br>
- * 		2>类名.class<br>
- * 		3>Class.forClass("全类名");<br>
+ * 		1 对象.getClass();<br>
+ * 		2 类名.class<br>
+ * 		3 Class.forClass("全类名");<br>
  * 2,反射创建对象:<br>
  * 		clazz.newInstance();//调用无参构造方法<br>
  * 

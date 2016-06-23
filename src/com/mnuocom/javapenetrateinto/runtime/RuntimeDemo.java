@@ -25,12 +25,12 @@ package com.mnuocom.javapenetrateinto.runtime;
  *  -Xmn 年轻代内存空间
  *  
  *  l 内存回收:
- *  	创建对象---判断Eden空间是否充足--true-->申请内存保存对象
- *  						--->false --> 生成MinoGC/MajorGC回收
+ *  	创建对象---判断Eden空间是否充足--true--申请内存保存对象
+ *  						---false -- 生成MinoGC/MajorGC回收
  *  
- *  ---是否充足---false--->将Eden区保存到存活区---判断旧生代是否充足--false
+ *  ---是否充足---false---将Eden区保存到存活区---判断旧生代是否充足--false
  *  
- *  ==>FullGC回收--->判断存活区和旧生代是否充足--false-->outmemoryERROR
+ *  ==FullGC回收---判断存活区和旧生代是否充足--false--outmemoryERROR
  *  2 简单描述流程:
  *  	新的对象保存在Eden中,之后此对象保存到年轻代中,而后进行垃圾回收(从gc)将保存在旧生代中(主GC)
  *  	如果再有新对象,从年轻代开始回收,在找到旧生代,最后没有空间了,进行fullgc回收

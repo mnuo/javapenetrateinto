@@ -5,7 +5,7 @@ package com.mnuocom.javapenetrateinto.thread;
 
 /**
  * @author saxon
- * 线程优先级
+ * <p>线程优先级</p>
  */
 public class ThreadPro {
 

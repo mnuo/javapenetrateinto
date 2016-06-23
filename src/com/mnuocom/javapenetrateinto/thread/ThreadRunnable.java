@@ -3,11 +3,10 @@
  */
 package com.mnuocom.javapenetrateinto.thread;
 
-import org.junit.Test;
 
 /**
  * @author saxon
- * 线程共享
+ * <p>线程共享</p>
  */
 public class ThreadRunnable {
 	
@@ -18,7 +17,6 @@ public class ThreadRunnable {
 			e.printStackTrace();
 		}
 	}
-	@Test
 	public void test1(){
 		Thread t1 = new MyThread2();
 		Thread t2 = new MyThread2();
@@ -31,7 +29,6 @@ public class ThreadRunnable {
 		t4.start();
 		t5.start();
 	}
-	@Test
 	public void test2() throws Exception {
 		MyThread1 mt = new MyThread1();
 		new Thread(mt).start();
@@ -41,7 +38,6 @@ public class ThreadRunnable {
 		new Thread(mt).start();
 		new Thread(mt).start();
 	}
-	@Test
 	public void test3() throws Exception {
 		MyThread2 mt = new MyThread2();
 		new Thread(mt).start();
