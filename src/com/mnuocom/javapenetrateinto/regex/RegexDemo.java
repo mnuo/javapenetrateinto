@@ -11,27 +11,27 @@ import java.util.regex.Pattern;
 
 /**
  * @author saxon
- * 关于正则表达式主要用于验证操作,大部分通过string类的方法可以实现:
- * 	String.replaceAll("\\d+");
- *  String.matches("\\d+");
- *  String.split("\\d+");
- * 正则表达式基本语法:
- * 	单字符:
- * 	\n,\t,\\,\\.
- *  范围,没有两次说明是单字符
- *  [a-zA-Z]
- *  简化字符:
- *  \d \D \w \W \s
- *  量词:
- *  ? 0|1次
- *  + 1或n次
- *  * 0或n次
- *  {n} n次
- *  {n,m} n-m次
- *  ()作为一个整体出现
- *  逻辑
- *  xy
- *  x|y
+ * <p>关于正则表达式主要用于验证操作,大部分通过string类的方法可以实现:<br>
+ * 	String.replaceAll("\\d+");<br>
+ *  String.matches("\\d+");<br>
+ *  String.split("\\d+");<br>
+ * 正则表达式基本语法:<br>
+ * 	单字符:<br>
+ * 	\n,\t,\\,\\.<br>
+ *  范围,没有两次说明是单字符<br>
+ *  [a-zA-Z]<br>
+ *  简化字符:<br>
+ *  \d \D \w \W \s<br>
+ *  量词:<br>
+ *  ? 0|1次<br>
+ *  + 1或n次<br>
+ *  * 0或n次<br>
+ *  {n} n次<br>
+ *  {n,m} n-m次<br>
+ *  ()作为一个整体出现<br>
+ *  逻辑<br>
+ *  xy<br>
+ *  x|y</p>
  */
 public class RegexDemo {
 
