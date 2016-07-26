@@ -12,6 +12,8 @@ import java.net.Socket;
 
 /**
  * @author saxon
+ * 在Java中可基于Socket,ServerSocket来实现TCP/IP +ＢＩＯ的系统间通信，Socket主要用于实现建立连接及网络IO的操作,ServerSocket主要用于实现服务器端端口的监听
+ * 及Socket对象的获取
  */
 public class ServersSocket {
 	public static void main(String[] args) {
