@@ -1,7 +1,7 @@
 /**
  * MyServer.java created at Jul 26, 2016 8:26:53 PM
  */
-package com.mnuocom.distributedjava.distributedJava1.mina.tcp;
+package com.mnuocom.distributedjava.distributedjava1.mina.tcp;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

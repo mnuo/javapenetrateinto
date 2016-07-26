@@ -1,7 +1,7 @@
 /**
  * Client.java created at Jul 26, 2016 9:14:27 PM
  */
-package com.mnuocom.distributedjava.distributedJava1.mina.tcp;
+package com.mnuocom.distributedjava.distributedjava1.mina.tcp;
 
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;

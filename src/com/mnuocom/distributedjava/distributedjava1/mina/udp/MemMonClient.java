@@ -1,4 +1,4 @@
-package com.mnuocom.distributedjava.distributedJava1.mina.udp;
+package com.mnuocom.distributedjava.distributedjava1.mina.udp;
 
 import java.net.InetSocketAddress;
 

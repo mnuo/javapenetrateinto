@@ -1,7 +1,7 @@
 /**
  * ServerSocket.java created at Jul 25, 2016 10:07:21 PM
  */
-package com.mnuocom.distributedjava.distributedJava1.tcpbio;
+package com.mnuocom.distributedjava.distributedjava1.tcpbio;
 
 import java.io.BufferedReader;
 import java.io.IOException;
