@@ -1,0 +1,18 @@
+1 在Java中可基于MulticastSocket 和DatagramPacket来实现多播网络通信,MulticastSocket是基于
+DataGramSocket派生出来的类,其作用即为基于UDP/IP实现多播方式的网络通信。在多播通信中,不同的地方在于接收数据端通过加入到多
+播组来进行数据的接收,同样发送数据也要求加入到多播组进行发送。多播的目标地址具有指定的地址范围,在244.0.0.0和239.255.255.255之间
+
+2 mina
+	Mina是Apache的顶级项目,基于Java NIO构建,同时支持TCP/IP和UDP/IP两种协议.Mina对外屏蔽了 JAVA NIO使用的复杂性,并在性能上做了不少优化
+	
+	在使用Mina时,关键的类为IoConnector,IoAcceptor,IoHandler及IoSession,Mina采用Filter Chain的方式封装消息发送和接收的流程,在这个Filter Chain过程中可进行消息的处理,消息的发送和接收
+	
+	IoConnector 负责配置客户端的消息处理器,IO事件处理线程池,消息发送/接收的Filter Chain等
+	IoAcceptor 负责配置服务器的IO事件处理线程池,消息发送/接收的Filter Chain等
+	IoHandler 作为Mina和应用的接口,当发生了连接事件,IO事件或异常事件时,Mina都会通知应用所实现的IoHandler
+	IoSession 有点类似SocketChannel的封装,不过Mina对连接做了进一步的抽象,因此可进行更多连接的控制及流信息的输出
+
+3 远程调用方式
+	RMI--Remote Method Invocation
+		是JAVA 用于实现透明远程调用的重要机制。在远程调用中,客户端仅有服务端提供的接口,通过此接口实现对远程服务器端的调用
+	
