@@ -33,5 +33,25 @@
 	       <!-- 表示开发的时候引入，发布的时候不会加载此包 -->    
 	       <scope>test</scope>    
 	</dependency> 
+	<dependency>  
+            <groupId>org.apache.mina</groupId>  
+            <artifactId>mina-core</artifactId>  
+            <version>2.0.4</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>org.apache.mina</groupId>  
+            <artifactId>mina-filter-compression</artifactId>  
+            <version>2.0.4</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>org.slf4j</groupId>  
+            <artifactId>slf4j-api</artifactId>  
+            <version>1.3.0</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>org.slf4j</groupId>  
+            <artifactId>slf4j-log4j12</artifactId>  
+            <version>1.3.0</version>  
+        </dependency>  
   </dependencies>
 </project>
