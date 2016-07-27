@@ -7,7 +7,7 @@
 + TCP/IP 是一种可靠的网络数据传输协议,TCP/IP要求通信双方首先建立连接,之后再进行数据的传输,TCP/IP负责保证数据传输的可靠性,包括数据的可到达,数据到达的顺序等,但是会牺牲一些性能
 + UDP/IP 是一种不保证数据一定到达的网络传输协议,UDP/IP并不直接给通信双方建立连接,而是发送到网络上进行传递,不能保证数据传输的可靠,因此性能上表现比较好,但可能会出现数据的丢失以及数据乱序的现象
 + Multicast
-		
+    	
 1.2 IO
 
 TCP/UDP可用于完成数据的传输,弹药完成系统间通信,还需要对数据进行处理,例如读取和写入数据,按照POSIX标准分为同步IO和异步IO,其中同步IO中最长用的的是BIO(Blocking IO)和NIO(Non-blocking IO)
@@ -158,7 +158,43 @@ RMI服务器端接收到客户端的请求对象后,解析其中的对象字符�
 2.2 基于开源框架实现远程调用方式的系统间通信
 
 + Spring RMI 
+
+    <img src="http://7xsqwa.com1.z0.glb.clouddn.com/mnuo-distributedjava-1.2.0.jpg" width="500" />  
+        
+    代码:
+    + server.xml
+            <!--服务端--> 
+            <bean id="businessService" class="com.mnuocom.distributedjava.distributedjava1.springrmi.server.BusinessImpl"/>
+            <!-- 将类为一个RMI服务 -->
+            <bean id="rmiBusinessService" class="org.springframework.remoting.rmi.RmiServiceExporter">
+                <!-- 服务类 -->
+            	<property name="service" ref="businessService"/>
+            	<!-- 服务名 -->
+            	<property name="serviceName" value="BusinessService"/>
+            	<!-- 服务接口 -->
+            	<property name="serviceInterface" value="com.mnuocom.distributedjava.distributedjava1.springrmi.server.Business"/>
+            	<!-- 服务端口
+            	<property name="registryPort" value="9999" />
+            	 其他属性自己查看org.springframework.remoting.rmi.RmiServiceExporter的类,就知道支持的属性了-->
+            </bean>
+    + Server.java
+            public static void main(String[] args) {
+            	new ClassPathXmlApplicationContext("com/mnuocom/distributedjava/distributedjava1/springrmi/server/server.xml");
+        		System.out.println("Server has been started!");
+        	}
+    + client.xml 
+            <bean id="businessService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+              
+    + Client.java
+            ApplicationContext ac = new ClassPathXmlApplicationContext("com/mnuocom/distributedjava/distributedjava1/springrmi/client/client.xml");
+        	Business business = (Business) ac.getBean("businessService");
+    		
+    		System.out.println(business.echo("hello springRMI."));
+    		System.out.println(business.echo("quit"));
+
 + CXF
 
+<img src="http://7xsqwa.com1.z0.glb.clouddn.com/mnuo-distributedjava-1.2.1.jpg" width="500" />
 
-
+###### [源码地址]
+[源码地址]: https://github.com/mnuo/javapenetrateinto/tree/master/src/com/mnuocom/distributedjava/distributedjava1
