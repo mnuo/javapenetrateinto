@@ -3,7 +3,7 @@
  */
 package com.mnuocom.distributedjava.distributedjava1.apachecxf;
 
-import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
+//import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
 
 /**
  * @author saxon
@@ -14,13 +14,13 @@ public class CxfServer {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Business service = new BusinessImpl();
+	/*	Business service = new BusinessImpl();
 		JaxWsServerFactoryBean factory = new JaxWsServerFactoryBean();
 		factory.setServiceClass(Business.class);
 		factory.setAddress("http://localhost:9527/business");
 		factory.setServiceBean(service);
 		factory.create();
-		System.out.println("server started!");
+		System.out.println("server started!");*/
 	}
 
 }
