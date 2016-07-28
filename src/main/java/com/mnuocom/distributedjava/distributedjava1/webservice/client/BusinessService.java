@@ -43,7 +43,7 @@ public class BusinessService
     }
 
     public BusinessService(WebServiceFeature... features) {
-        super(__getWsdlLocation(), BUSINESSSERVICE_QNAME, features);
+        super(__getWsdlLocation(), BUSINESSSERVICE_QNAME);
     }
 
     public BusinessService(URL wsdlLocation) {
@@ -51,7 +51,7 @@ public class BusinessService
     }
 
     public BusinessService(URL wsdlLocation, WebServiceFeature... features) {
-        super(wsdlLocation, BUSINESSSERVICE_QNAME, features);
+        super(wsdlLocation, BUSINESSSERVICE_QNAME);
     }
 
     public BusinessService(URL wsdlLocation, QName serviceName) {
@@ -59,7 +59,7 @@ public class BusinessService
     }
 
     public BusinessService(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
-        super(wsdlLocation, serviceName, features);
+        super(wsdlLocation, serviceName);
     }
 
     /**

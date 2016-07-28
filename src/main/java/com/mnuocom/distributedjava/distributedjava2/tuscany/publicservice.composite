@@ -1,0 +1,14 @@
+<composite name="HelloWorld" 
+	targetNamespace="http://tuscany.apache.org/xmlns/sca/1.0"
+	xmlns="http://www.osoa.org/xmlns/sca/1.0"
+	xmlns:nsl="http://www.osoa.org/xmlns/sca/1.0">
+	
+	<service name="HelloWorldService" promote="HelloWorldComponent">
+		<interface.java interface="com.mnuocom.distributedjava.distributedjava2.tuscany.HelloWord"/>
+		<binding.ws uri="http://localhost:8080/services/HelloWorldService"/>
+	</service>
+	<component name="HelloWorldComponent">
+		<implementation.spring location="tuscanybeans.xml"/>
+	</component>
+</composite>
+	

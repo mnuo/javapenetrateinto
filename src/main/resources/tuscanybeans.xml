@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:sca="http://www.springframework.org/schema/sca"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/sca
+		http://www.springframework.org/xmlns/2.0/spring-sca.xsd">
+		
+		<sca:service name="HelloWorldService" type="com.mnuocom.distributedjava.distributedjava2.tuscany.HelloWord" 
+		target="HelloWorldServiceBean"/>
+		<bean id="HelloWorldServiceBean" class="com.mnuocom.distributedjava.distributedjava2.tuscany.DefaultHelloWorld"/>
+</beans>

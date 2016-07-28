@@ -3,7 +3,7 @@
  */
 package com.mnuocom.distributedjava.distributedjava2.tuscany;
 
-import org.oasisopen.sca.annotation.Remotable;
+import org.osoa.sca.annotations.Remotable;
 
 /**
  * @author saxon
