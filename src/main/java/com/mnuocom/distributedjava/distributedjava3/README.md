@@ -284,7 +284,99 @@ ClassLoader抽象类提供了几个关键的方法:
     当扫描存活对象时,Minor GC所做的动作为将存货的对象复制目前作为To Space 当再次进行MinorGc 则转换为From space,通常存活的对象在Minor GC后并不是直接进入旧生代,只有经历过几次Minor GC仍然存活的对象,才放入旧生代中
   - 并行回收GC(Paralled Scavenge)
 
-  - 并行GC (ParNew)
+  - 并行GC (ParNew)   
+
+    MinorGC例子:
+        public class MinorGCDemo {
+            public static void main(String[] args) throws InterruptedException {
+        		MemoryObject obj = new MemoryObject(1024*1024);
+        		for(int i = 0; i < 2; i ++){
+        			happenMinorGC(11);
+        			Thread.sleep(2000);
+        		}
+        	}
+        	private static void happenMinorGC(int happanMinorGCIndex) throws InterruptedException{
+        		for(int i =0;i < happanMinorGCIndex; i ++){
+        			if(i == happanMinorGCIndex - 1){
+        				Thread.sleep(2000);
+        				System.out.println("minor gc should happen");
+        			}
+        			new MemoryObject(1024 * 1024);
+        		}
+        	}
+        }
+        class MemoryObject{
+        	private byte[] bytes;
+        	public MemoryObject(int objectSize){
+        		this.setBytes(new byte[objectSize]);
+        	}
+        	public byte[] getBytes() {
+        		return bytes;
+        	}
+        	public void setBytes(byte[] bytes) {
+        		this.bytes = bytes;
+        	}
+        }
+        
+    设置VM:
+        -Xms40M -Xmx40M -Xmn16M -verbose:gc -XX:+PrintGCDetails
+        
+    输出:
+        minor gc should happen
+	    [GC (Allocation Failure) [DefNew: 12583K->1596K(14784K), 0.0063938 secs] 12583K->1596K(39360K), 0.0065061 secs] [Times: user=0.02 sys=0.00, real=0.01 secs] 
+	    minor gc should happen
+    	Heap
+        def new generation   total 14784K, used 14275K [0x04800000, 0x05800000, 0x05800000)
+          eden space 13184K,  96% used [0x04800000, 0x05461a40, 0x054e0000)
+          from space 1600K,  99% used [0x05670000, 0x057ff2a0, 0x05800000)
+          to   space 1600K,   0% used [0x054e0000, 0x054e0000, 0x05670000)
+        tenured generation   total 24576K, used 0K [0x05800000, 0x07000000, 0x07000000)
+          the space 24576K,   0% used [0x05800000, 0x05800000, 0x05800200, 0x07000000)
+        Metaspace       used 95K, capacity 2244K, committed 2368K, reserved 4480K
+        
+    说明:
+        当分配到创建到12个对象时,eden空间不足,执行minor gc 将对象移动到from space 中
 
 + 旧生代和持久代可用的GC
-  Full GC
+
+  - Full GC
+  
+    FullGC例子:
+    	public static void main(String[] args) throws InterruptedException {
+    		List<MemoryObject> objects = new ArrayList<MemoryObject>(6);
+    		for(int i = 0; i < 10; i ++){
+    			objects.add(new MemoryObject(1024*1024));
+    		}
+    		//让上面的对象尽可能转入旧生代中
+    		System.gc();
+    		System.gc();
+    		Thread.sleep(2000);
+    		objects.clear();
+    		for(int i = 0; i < 10;i ++){
+    			objects.add(new MemoryObject(1024*1024));
+    			if(i % 3 == 0){
+    				objects.remove(0);
+    			}
+    		}
+    		Thread.sleep(5000);
+    	}
+	
+	设置VM:
+
+        -Xms40M -Xmx40M -Xmn16M -verbose:gc -XX:+PrintGCDetails
+        
+	输出:
+    
+        [GC (Allocation Failure) [DefNew: 7323K->572K(9216K), 0.0103217 secs] 7323K->6716K(19456K), 0.0104213 secs] [Times: user=0.00 sys=0.00, real=0.01 secs] 
+        [GC (Allocation Failure) [DefNew: 7323K->572K(9216K), 0.0103217 secs] 7323K->6716K(19456K), 0.0104213 secs] [Times: user=0.00 sys=0.00, real=0.01 secs] 
+        [Full GC (System.gc()) [Tenured: 6144K->9216K(10240K), 0.0062887 secs] 10961K->10810K(19456K), [Metaspace: 95K->95K(4480K)], 0.0063703 secs] [Times: user=0.00 sys=0.02, real=0.01 secs] 
+        [Full GC (System.gc()) [Tenured: 9216K->9216K(10240K), 0.0026784 secs] 10810K->10810K(19456K), [Metaspace: 95K->95K(4480K)], 0.0027502 secs] [Times: user=0.00 sys=0.00, real=0.00 secs] 
+        [Full GC (Allocation Failure) [Tenured: 9216K->4666K(10240K), 0.0043285 secs] 17109K->4666K(19456K), [Metaspace: 95K->95K(4480K)], 0.0043973 secs] [Times: user=0.02 sys=0.00, real=0.00 secs] 
+        Heap
+         def new generation   total 9216K, used 4405K [0x04800000, 0x05200000, 0x05200000)
+          eden space 8192K,  53% used [0x04800000, 0x04c4d420, 0x05000000)
+          from space 1024K,   0% used [0x05100000, 0x05100000, 0x05200000)
+          to   space 1024K,   0% used [0x05000000, 0x05000000, 0x05100000)
+         tenured generation   total 10240K, used 4666K [0x05200000, 0x05c00000, 0x05c00000)
+           the space 10240K,  45% used [0x05200000, 0x0568eba0, 0x0568ec00, 0x05c00000)
+         Metaspace       used 95K, capacity 2244K, committed 2368K, reserved 4480K	
