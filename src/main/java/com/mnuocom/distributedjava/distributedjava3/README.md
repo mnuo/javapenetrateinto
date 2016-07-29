@@ -162,3 +162,31 @@ Constant pool:
         line 3: 0
 }
 SourceFile: "Foo.java"
+
+###### 1.2 类加载机制
+类加载机制是指.class文件加载到JVM,并形成Class对象的机制,之后应用就可对Class对象进行实例化并调用,类加载机制可在运行时动态加载外部的类,远程网络下载过来的class文件等,类加载过程可划分为:装载,链接和初始化;装载和链接过程完成后,即将二进制的字节码转换成Class对象;初始化过程不是类加载类时必须触发,但最迟必须在初次主动使用对象前执行,其所作的动作为给静态变量赋值,调用<clinit>()等
++ 1 装载
+> 装载过程负责找到二进制字节码并加载至JVM中,JVM通过类的全限定名(com.bluedavy.HelloWorld)及类加载器(ClassLoaderA实例)完成类的加载,同样也采用以上两个元素来标识一个被加载了的类: 类的全限定名+CllassLoader实例ID
+
++ 2 连接(Link)
+> 链接过程负责对二进制字节码的格式进行校验,初始化装载类中的静态变量及解析类中调用的接口,类;二进制字节码的格式校验遵循Java Class File Format规范,如果格式不符合,则抛出VerifyError;检验过程中如果碰到要引用到其他的接口和类,也会进行加载;如果加载过程失败,则会抛出NoClassDefFoundError.在完成校验后,JVM初始化类中的静态变量,并将其赋为默认值。最后对类中的属性,方法进行验证,以确保其要调用的属性,方法存在,以及具备相应的权限(public,private),如果这个阶段失败可能会造成NoSuchMethodError,NoSuchFieldError
+
++ 3 初始化(Initialize)
+> 初始化过程即执行类中的静态初始化代码,噶偶早起代码及静态属性的初始化,在以下四种情况下,初始化过程会被触发执行:
+  - 1) 调用了new
+  - 2) 反射调用了类中的方法;
+  - 3) 子类调用了初始化;
+  - 4) JVM启动过程中指定的初始化类
+
+JVM 的类加载通过ClassLoader及其子类来完成,分为:Boostrap ClassLoader,Extension ClassLoader,System ClassLoader及 User-Defined ClassLoader
+![]()
+
+      ClassLoader clazzLoader = ClassLoaderDemo.class.getClassLoader();
+      System.out.println(clazzLoader);//sun.misc.Launcher$AppClassLoader@4e0e2f2a 是System ClassLoader
+      System.out.println(clazzLoader.getParent());//sun.misc.Launcher$ExtClassLoader@2a139a55 是Extension ClassLoader
+      System.out.println(clazzLoader.getParent().getParent());//null 是boostrap ClassLoader 这个是c++写的,所以无法获取
+
++ Boostrap ClassLoader
++ Extension ClassLoader
++ System ClassLoader
++ User-Defined ClassLoader
