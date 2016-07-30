@@ -60,6 +60,31 @@ add方法并没有加上synchronized关键字,他通过ReentrantLock来保证县
 和ArrayList性能比较
 > CopyOnWriteArrayList在增加元素和删除元素 时性能下降比较明显,并且性能会比ArrayList低,但在查找元素这点上随着线程数的增加,性能较ArraList会好很多
 
+##### 3 CopyOnWriteArraySet
+CopyOnWriteArraySet 基于CopyOnWriteArrayList;唯一个不同是在add时调用CopyOnwriteArrayList的addIfAbsent方法;CopyOnWriteArraySet在add时每次都要进行数组的遍历,因此性能会略低于CopyOnwriteArrayList
+
+##### 4 ArrayBlockingQueue
+ArrayBlockingQueue是一个基于数组的先进先出,线程安全的集合类,其特色为可实现指定时间的阻塞读写,并且容量是可限制的
+
++ ArrayBlockingQueue(int)
+没有构造器,出入的参数即为创建对象数组的大小,同时初始化锁和两个锁上的Condition:notEmpty,notFull
++ offer(E,long,TimeUnit)
+此方法用于插入元素至数组的尾部,如数组已满,则进入等待,知道出现以下三种情况:
+	- 被唤醒
+	- 到达指定时间
+	- 当前线程被中断
+
++ poll(E,long,TimeUnit)
+获取第一个元素,如队列中没有元素,则进入等待与offer相同
+
++ iterater();
+
+##### 5 AtomicInteger
+AtomicInteger是一个支持院子操作的Integer类,在没有AtomicInteger前,要实现一个按顺序获取的ID,就必须每次获取时进行加锁操作,以避免出现并发时获取到同样ID的现象
+
+
+
+
 
 
 
