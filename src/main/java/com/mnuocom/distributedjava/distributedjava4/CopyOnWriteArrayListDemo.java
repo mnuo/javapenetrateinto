@@ -1,7 +1,7 @@
 /**
  * CopyOnWriteArrayListDemo.java created at Jul 30, 2016 10:35:42 PM
  */
-package com.mnuocom.distributedjava.distrubutedjava3currentpacket;
+package com.mnuocom.distributedjava.distributedjava4;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 

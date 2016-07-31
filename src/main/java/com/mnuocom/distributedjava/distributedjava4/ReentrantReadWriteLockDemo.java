@@ -1,7 +1,7 @@
 /**
  * ReentrantReadWriteLockDemo.java created at Jul 31, 2016 10:51:03 AM
  */
-package com.mnuocom.distributedjava.distrubutedjava3currentpacket;
+package com.mnuocom.distributedjava.distributedjava4;
 
 import java.util.HashMap;
 import java.util.Map;

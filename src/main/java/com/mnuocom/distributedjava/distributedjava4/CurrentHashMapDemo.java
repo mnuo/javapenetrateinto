@@ -1,7 +1,7 @@
 /**
  * CurrentHashMapDemo.java created at Jul 30, 2016 9:41:49 PM
  */
-package com.mnuocom.distributedjava.distrubutedjava3currentpacket;
+package com.mnuocom.distributedjava.distributedjava4;
 
 import java.util.HashMap;
 import java.util.Iterator;

@@ -1,7 +1,7 @@
 /**
  * ThreadPoolExecutorDemo.java created at Jul 31, 2016 9:45:46 AM
  */
-package com.mnuocom.distributedjava.distrubutedjava3currentpacket;
+package com.mnuocom.distributedjava.distributedjava4;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;

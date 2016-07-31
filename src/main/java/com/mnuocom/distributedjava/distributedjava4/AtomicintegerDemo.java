@@ -1,7 +1,7 @@
 /**
  * AtomicintegerDemo.java created at Jul 31, 2016 9:09:37 AM
  */
-package com.mnuocom.distributedjava.distrubutedjava3currentpacket;
+package com.mnuocom.distributedjava.distributedjava4;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
