@@ -60,6 +60,9 @@ HTTP是Hypertext Transfer Protocol(超文本传输协议)的缩写
 ![](http://7xsqwa.com1.z0.glb.clouddn.com/mnuo-largeDistributed-1.2-http-req-resp.jpg)
 例子: 客户端会向服务端发送一条命令,服务端收到命令后,会判断命令是否为HELLO 如果是"HELLO",则返回给客户端的相应为"hello",否则返回个客户端的相应为"bye".
 
+##### 2.2 HTTP请求与响应
+![](http://7xsqwa.com1.z0.glb.clouddn.com/mnuo-largedistributed-1.2-http-comunite.jpg)
+
 
 
 
