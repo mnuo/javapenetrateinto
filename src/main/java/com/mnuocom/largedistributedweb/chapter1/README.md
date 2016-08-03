@@ -63,6 +63,29 @@ HTTP是Hypertext Transfer Protocol(超文本传输协议)的缩写
 ##### 2.2 HTTP请求与响应
 ![](http://7xsqwa.com1.z0.glb.clouddn.com/mnuo-largedistributed-1.2-http-comunite.jpg)
 
+##### 2.3 通过HttpClient发送请求
+
+##### 2.4 HTTP相对TCP的优势
+
+##### 2.5 JSON和XML
+JSON(JavaScript Object Notation)是一种轻量级的数据交换语言,以文字为基础,且易于让人阅读.尽管JSON是JavaScript的一个子集,但其独立于语言的文本格式,使得JSON成为理想的数据交换语言
+XML:
+	Person person = new Person("zhangsan","jiangsu");
+	
+	//将person对象转化成xml
+	XStream stream = new XStream(new DomDriver());
+	stream.alias("person", Person.class);
+	String personXML = stream.toXML(person);
+	System.out.println(personXML);
+	/*FileWriter writer = new FileWriter(new File("d://person.xml"));
+	writer.write(personXML);
+	writer.flush();
+	writer.close();*/
+	Person person2 = (Person) stream.fromXML(personXML);
+	System.out.println(person2.getName() + ","+ person2.getAddress());
+
+##### 2.6 
+
 
 
 

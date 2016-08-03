@@ -176,6 +176,12 @@
 		    <artifactId>hessian</artifactId>
 		    <version>4.0.38</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream -->
+		<dependency>
+		    <groupId>com.thoughtworks.xstream</groupId>
+		    <artifactId>xstream</artifactId>
+		    <version>1.4.9</version>
+		</dependency>
 		
   </dependencies>
 </project>
