@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"  
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xmlns:mvc="http://www.springframework.org/schema/mvc"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans    
+                        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd    
+                        http://www.springframework.org/schema/context    
+                        http://www.springframework.org/schema/context/spring-context-3.2.xsd    
+                        http://www.springframework.org/schema/mvc    
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+                        
+	<!-- 相关包扫描的基本路径,包括@Controller, @Service, @Configuration -->
+	<context:component-scan base-package="com.mnuocom.largedistributedweb.chapter1.springmvcrestfulurl"/>
+	
+	<!-- 开启 Spring MVC @Controller模式 -->
+	<mvc:annotation-driven/>
+                        
+    <bean id="contentNegotiatingViewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+	    <!-- 在没有扩展名时的默认展现形式 -->
+	    <property name="defaultContentType" value="applicattion/xml"/>
+    	<!-- 扩展名至mimeType的映射,即/user.json ==> application/json -->
+    	<property name="mediaTypes">
+    		<map>
+    			<entry key="html" value="text/html"/>
+    			<entry key="json" value="application/json"/>
+    			<entry key="xml" value="application/xml"/>
+    		</map>
+    	</property>
+    	<property name="defaultViews">
+    		<list>
+    			<ref bean="mappingJacksonJsonView"/>
+    			<ref bean="marshallingView"/>
+    		</list>
+    	</property>
+    </bean>
+    <!-- 转换对象 -->
+    <bean id="jaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+    	<property name="classesToBeBound">
+    		<value>com.mnuocom.largedistributedweb.chapter1.springmvcrestfulurl.JsonResult</value>
+    	</property>
+    </bean>
+    
+    <!-- 输出为JSON数据 -->
+    <bean id="mappingJacksonJsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+    	<property name="prefixJson" value="false"/>
+    </bean>
+    
+    <!-- 输出为XML数据 -->
+    <bean id="marshallingView" class="org.springframework.web.servlet.view.xml.MarshallingView">
+    	<constructor-arg ref="jaxb2Marshaller"/>
+    </bean>
+                 
+</beans>

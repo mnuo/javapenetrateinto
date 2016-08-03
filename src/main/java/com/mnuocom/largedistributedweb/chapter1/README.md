@@ -84,7 +84,17 @@ XML:
 	Person person2 = (Person) stream.fromXML(personXML);
 	System.out.println(person2.getName() + ","+ person2.getAddress());
 
-##### 2.6 
+##### 2.6 RESTful 和 RPC
+URL链接风格:
++ RPC   
+直接在HTTP请求的参数中标明需要远程调用的服务接口,服务需要的参数即可:
+	http://localhost:80/service/getListRelease.action?pageNumber=1&pageSize=10&pressRelease.pressType=0
+
++ REST (Representational State Transfer) 表现层状态转换
+![](http://7xsqwa.com1.z0.glb.clouddn.com/mnuo-largedistributed-1.2-restful.jpg)
+
+##### 2.7 基于HTTP协议的RPC的实现
+基于Java的Servlet接口,实现了基于HTTP协议的RPC风格的远程调用,服务和消费者和远端的服务提供方法
 
 
 

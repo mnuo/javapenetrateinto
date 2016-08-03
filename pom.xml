@@ -65,53 +65,66 @@
             <version>1.7.7</version>  
         </dependency>  
         <!-- spring核心包 -->    
-	    <dependency>    
-	        <groupId>org.springframework</groupId>    
-	        <artifactId>spring-core</artifactId>    
-	        <version>${spring.version}</version>    
-	    </dependency>
-	    <dependency>    
-	        <groupId>org.springframework</groupId>    
-	        <artifactId>spring-aop</artifactId>    
-	        <version>${spring.version}</version>    
-	    </dependency>  
-	     <dependency>    
-	        <groupId>org.springframework</groupId>    
-	        <artifactId>spring-tx</artifactId>    
-	        <version>${spring.version}</version>    
-	    </dependency>  
-	    
-	     <!-- <dependency>    
-	        <groupId>org.springframework</groupId>    
-	        <artifactId>spring-asm</artifactId>    
-	        <version>${spring.version}</version>    
-	    </dependency>   -->
-	     <dependency>    
-	        <groupId>org.springframework</groupId>    
-	        <artifactId>spring-beans</artifactId>    
-	        <version>${spring.version}</version>    
-	    </dependency>  
-	    
-	     <dependency>    
-	        <groupId>org.springframework</groupId>    
-	        <artifactId>spring-context</artifactId>    
-	        <version>${spring.version}</version>    
-	    </dependency>  
-	     <dependency>    
-	        <groupId>org.springframework</groupId>    
-	        <artifactId>spring-expression</artifactId>    
-	        <version>${spring.version}</version>    
-	    </dependency>  
-	     <dependency>    
-	        <groupId>org.springframework</groupId>    
-	        <artifactId>spring-web</artifactId>    
-	        <version>${spring.version}</version>    
-	    </dependency>    
-	    <dependency>    
-	        <groupId>org.springframework</groupId>    
-	        <artifactId>spring-oxm</artifactId>    
-	        <version>${spring.version}</version>    
-	    </dependency>    
+    <dependency>    
+        <groupId>org.springframework</groupId>    
+        <artifactId>spring-core</artifactId>    
+        <version>${spring.version}</version>    
+    </dependency>    
+
+    <dependency>    
+        <groupId>org.springframework</groupId>    
+        <artifactId>spring-web</artifactId>    
+        <version>${spring.version}</version>    
+    </dependency>    
+    <dependency>    
+        <groupId>org.springframework</groupId>    
+        <artifactId>spring-oxm</artifactId>    
+        <version>${spring.version}</version>    
+    </dependency>    
+    <dependency>    
+        <groupId>org.springframework</groupId>    
+        <artifactId>spring-tx</artifactId>    
+        <version>${spring.version}</version>    
+    </dependency>    
+
+    <dependency>    
+        <groupId>org.springframework</groupId>    
+        <artifactId>spring-jdbc</artifactId>    
+        <version>${spring.version}</version>    
+    </dependency>    
+
+    <dependency>    
+        <groupId>org.springframework</groupId>    
+        <artifactId>spring-webmvc</artifactId>    
+        <version>${spring.version}</version>    
+    </dependency>    
+    <dependency>    
+        <groupId>org.springframework</groupId>    
+        <artifactId>spring-aop</artifactId>    
+        <version>${spring.version}</version>    
+    </dependency>    
+
+    <dependency>    
+        <groupId>org.springframework</groupId>    
+        <artifactId>spring-context-support</artifactId>    
+        <version>${spring.version}</version>    
+    </dependency>    
+
+    <dependency>    
+        <groupId>org.springframework</groupId>    
+        <artifactId>spring-test</artifactId>    
+        <version>${spring.version}</version>    
+    </dependency>    
+	<!-- <dependency>
+		<groupId>org.apache.bval</groupId>
+		<artifactId>bval-jsr303</artifactId>
+		<version>0.4</version>
+	</dependency> -->
+	<dependency>
+	    <groupId>org.hibernate</groupId>
+	    <artifactId>hibernate-validator</artifactId>
+	    <version>5.2.4.Final</version>
+	</dependency> 
 	    <!-- 3.0.5自带有
 	    	<dependency>
 			<groupId>org.springframework</groupId>
@@ -183,5 +196,31 @@
 		    <version>1.4.9</version>
 		</dependency>
 		
+		<!-- 导入java ee jar 包 -->    
+	    <dependency>  
+	        <groupId>javax</groupId>  
+	        <artifactId>javaee-api</artifactId>  
+	        <version>7.0</version>  
+	    </dependency>
+	    
+	    <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+		<dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpclient</artifactId>
+		    <version>4.5.2</version>
+		</dependency>
+	    <!-- 格式化对象，方便输出日志 -->    
+	    <dependency>    
+	        <groupId>com.alibaba</groupId>    
+	        <artifactId>fastjson</artifactId>    
+	        <version>1.1.41</version>    
+	    </dependency>    
+	    
+	    <!-- 映入JSON -->    
+	    <dependency>    
+	        <groupId>org.codehaus.jackson</groupId>    
+	        <artifactId>jackson-mapper-asl</artifactId>    
+	        <version>1.9.13</version>    
+	    </dependency> 
   </dependencies>
 </project>
