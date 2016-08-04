@@ -91,11 +91,22 @@ URL链接风格:
 	http://localhost:80/service/getListRelease.action?pageNumber=1&pageSize=10&pressRelease.pressType=0
 
 + REST (Representational State Transfer) 表现层状态转换
+
 ![](http://7xsqwa.com1.z0.glb.clouddn.com/mnuo-largedistributed-1.2-restful.jpg)
 
 ##### 2.7 基于HTTP协议的RPC的实现
 基于Java的Servlet接口,实现了基于HTTP协议的RPC风格的远程调用,服务和消费者和远端的服务提供方法
 
+#### 3 服务的路由和负载均衡
+##### 3.1 服务化的演变
+公共的业务被拆分出来,形成可共用的服务,最大程度的保障了代码和逻辑的复用,避免重复建设,这种设计也称为SOA(Service-Oriented Architecture)
+
+##### 3.2 负载均衡算法
++ 1 轮询(Round Robin)法
++ 2 随机(Random)法
++ 3 原地址哈希(Hash)法
++ 4 加权轮询法(Weight Round Robin)
++ 5 加权随机法(Weight Random)
 
 
 
