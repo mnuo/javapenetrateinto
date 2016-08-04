@@ -222,5 +222,11 @@
 	        <artifactId>jackson-mapper-asl</artifactId>    
 	        <version>1.9.13</version>    
 	    </dependency> 
+	    
+	    <dependency>  
+           <groupId>org.apache.zookeeper</groupId>  
+           <artifactId>zookeeper</artifactId>  
+           <version>3.4.8</version>  
+       </dependency>  
   </dependencies>
 </project>
