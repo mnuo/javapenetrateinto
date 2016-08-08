@@ -228,5 +228,12 @@
            <artifactId>zookeeper</artifactId>  
            <version>3.4.8</version>  
        </dependency>  
+       <!-- jmagick -->
+       <dependency>
+		    <groupId>jmagick</groupId>
+		    <artifactId>jmagick</artifactId>
+		    <version>6.2.4</version>
+		</dependency>
+       
   </dependencies>
 </project>
