@@ -1,6 +1,6 @@
 ---
-title: 大型分布式网站--3 互联网安全架构(常用的安全算法)
-date: 2016-08-05 16:12:08 
+title: 大型分布式网站--3 互联网安全架构(2常用的安全算法)
+date: 2016-08-09 16:12:08 
 tags: 分布式java基础应用和实践
 category: 分布式java基础应用和实践
 ---
@@ -107,5 +107,45 @@ RSA公钥加密算法是1977年由罗纳德·李维斯特（Ron Rivest）、阿�
 		return signature.verify(sign);
 	}
 
-##### 4.2 
+##### 4.2 SHA1withRSA
+	
+	/**
+	 * 签名2
+	 * @param content
+	 * @param privateKey
+	 * @return
+	 * @throws Exception
+	 */
+	public static byte[] sign1(byte[] content, PrivateKey privateKey) throws Exception {
+		Signature signature = Signature.getInstance("SHA1withRSA");
+		signature.initSign(privateKey);
+		signature.update(content);
+		return signature.sign();
+	}
+	/**
+	 * 验证2
+	 * @param content
+	 * @param sign
+	 * @param publicKey
+	 * @return
+	 * @throws Exception
+	 */
+	public static boolean verify1(byte[] content, byte[] sign, PublicKey publicKey) throws Exception{
+		Signature signature = Signature.getInstance("SHA1withRSA");
+		signature.initVerify(publicKey);
+		signature.update(content);
+		return signature.verify(sign);
+	}
+
+#### 5 数字证书
+数字证书就是互联网通讯中标志通讯各方身份信息的一系列数据，提供了一种在Internet上验证您身份的方式，其作用类似于司机的驾驶执照或日常生活中的身份证。它是由一个由权威机构-----CA机构，又称为证书授权（Certificate Authority）中心发行的，人们可以在网上用它来识别对方的身份。数字证书是一个经证书授权中心数字签名的包含公开密钥拥有者信息以及公开密钥的文件。最简单的证书包含一个公开密钥、名称以及证书授权中心的数字签名。
+
+具体的说明,参考文章[http://blog.csdn.net/oscar999/article/details/9364101]
+
+[http://blog.csdn.net/oscar999/article/details/9364101]: http://blog.csdn.net/oscar999/article/details/9364101
+
+证书管理工具: 
+
++ keytool  
++ openSSL 
 
