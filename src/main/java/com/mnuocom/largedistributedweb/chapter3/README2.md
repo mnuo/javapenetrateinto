@@ -60,3 +60,8 @@ jdk 1.8:
 DES是一种对称加密算法，所谓对称加密算法即：加密和解密使用相同密钥的算法。DES加密算法出自IBM的研究，后来被美国政府正式采用，之后开始广泛流传，但是近些年使用越来越少，因为DES使用56位密钥，以现代计算能力，24小时内即可被破解。[desdemo]
 
 [desdemo]: https://github.com/mnuo/javapenetrateinto/tree/master/src/main/java/com/mnuocom/largedistributedweb/chapter3/symmetricencryption/DESDemo.java
+
+
+##### 2.2 AES 算法
+AES (Advanced Encryption Standard) 高级加密标准,作为新一代的数据加密标准,汇聚了强安全性,高性能,高效率,易用和灵活等优点.
+

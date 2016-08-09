@@ -13,15 +13,21 @@ import javax.crypto.spec.SecretKeySpec;
 /**
  * @author saxon
  */
-public class DESUtil {
+public class SymEncUtil {
+	public static final String ENCRYPTTYPE_DES = "DES";
+	public static final String ENCRYPTTYPE_AES = "AES";
 	/**
 	 * 生成经过base64编码后的密钥
 	 * @return
 	 * @throws Exception
 	 */
-	public static String genKeyDES() throws Exception{
-		KeyGenerator keyGenerator = KeyGenerator.getInstance("DES");
-		keyGenerator.init(56);
+	public static String genKey(String encryptType) throws Exception{
+		KeyGenerator keyGenerator = KeyGenerator.getInstance(encryptType);
+		if(encryptType.equals(ENCRYPTTYPE_AES)){
+			keyGenerator.init(128);
+		}else{
+			keyGenerator.init(56);
+		}
 		SecretKey key = keyGenerator.generateKey();
 		String base64Str = byte2base64(key.getEncoded());
 		return base64Str;
@@ -31,9 +37,9 @@ public class DESUtil {
 	 * @param base64Key
 	 * @return
 	 */
-	public static SecretKey loadKeyDES(String base64Key){
+	public static SecretKey loadKey(String base64Key, String encryptType){
 		byte[] bytes = base642byes(base64Key);
-		SecretKey key = new SecretKeySpec(bytes, "DES");
+		SecretKey key = new SecretKeySpec(bytes, encryptType);
 		return key;
 	}
 	/**
@@ -63,7 +69,13 @@ public class DESUtil {
 	 * @throws Exception
 	 */
 	public static byte[] encryptDES(byte[] source, SecretKey key) throws Exception{
-		Cipher cipher = Cipher.getInstance("DES");
+		return encrypt(source, key, ENCRYPTTYPE_DES);
+	}
+	public static byte[] encryptAES(byte[] source, SecretKey key) throws Exception{
+		return encrypt(source, key, ENCRYPTTYPE_AES);
+	}
+	public static byte[] encrypt(byte[] source, SecretKey key, String encryptType) throws Exception{
+		Cipher cipher = Cipher.getInstance(encryptType);
 		cipher.init(Cipher.ENCRYPT_MODE, key);
 		byte[] bytes = cipher.doFinal(source);
 		return bytes;
@@ -76,7 +88,27 @@ public class DESUtil {
 	 * @throws Exception
 	 */
 	public static byte[] decryptDES(byte[] source, SecretKey key) throws Exception {
-		Cipher cipher = Cipher.getInstance("DES");
+		return decrypt(source, key, ENCRYPTTYPE_DES);
+	}
+	/**
+	 * DES 解密
+	 * @param source
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	public static byte[] decryptAES(byte[] source, SecretKey key) throws Exception {
+		return decrypt(source, key, ENCRYPTTYPE_AES);
+	}
+	/**
+	 * DES 解密
+	 * @param source
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	public static byte[] decrypt(byte[] source, SecretKey key,String encryptType) throws Exception {
+		Cipher cipher = Cipher.getInstance(encryptType);
 		cipher.init(Cipher.DECRYPT_MODE, key);
 		byte[] bytes = cipher.doFinal(source);
 		return bytes;
