@@ -65,3 +65,11 @@ DES是一种对称加密算法，所谓对称加密算法即：加密和解密�
 ##### 2.2 AES 算法
 AES (Advanced Encryption Standard) 高级加密标准,作为新一代的数据加密标准,汇聚了强安全性,高性能,高效率,易用和灵活等优点.
 
+#### 3 非对称加密算法
+非对称加密算法又称为公开密钥加密算法,他需要两个密钥,一个称为公开密钥(public key)即公钥;另一个称为私有密钥(private key),即密钥.公钥加密,私钥解密;私钥加密,公钥解密.
+
+##### 3.1 RSA 算法
+RSA公钥加密算法是1977年由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Adi Shamir）和伦纳德·阿德曼（Leonard Adleman）一起提出的。1987年首次公布，当时他们三人都在麻省理工学院工作。RSA就是他们三人姓氏开头字母拼在一起组成的。RSA是目前最有影响力的公钥加密算法，它能够抵抗到目前为止已知的绝大多数密码攻击，已被ISO推荐为公钥数据加密标准。[RSAdemo]
+
+[RSAdemo]: https://github.com/mnuo/javapenetrateinto/tree/master/src/main/java/com/mnuocom/largedistributedweb/chapter3/rsa/RSADemo.java
+
