@@ -52,3 +52,11 @@ jdk 1.8:
 		byte[] bb = decode.decode(encode.encodeToString("hello".getBytes()));
 		System.out.println(new String(decode.decode(bytes)));
 		System.out.println(new String(bb));
+
+#### 2 对称加密算法
+对称加密算法中,数据发送方将明文(原始数据) 和加密密钥一起经过特殊加密算法处理后,生成复杂的加密密文进行发送,数据接收方收到密文后,弱项读取原文,则需要使用加密使用的密钥及相同算法的逆算法对加密的密文进行解密,才能使其恢复成可读明文.在对称加密算法中,使用的密钥只要一个,发送和接受双方都使用这个密钥对数据进行加密和解密,这就要求加密和解密方事先都必须知道加密的密钥.
+
+##### 2.1 DES算法
+DES是一种对称加密算法，所谓对称加密算法即：加密和解密使用相同密钥的算法。DES加密算法出自IBM的研究，后来被美国政府正式采用，之后开始广泛流传，但是近些年使用越来越少，因为DES使用56位密钥，以现代计算能力，24小时内即可被破解。[desdemo]
+
+[desdemo]: https://github.com/mnuo/javapenetrateinto/tree/master/src/main/java/com/mnuocom/largedistributedweb/chapter3/symmetricencryption/DESDemo.java
