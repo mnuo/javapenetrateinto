@@ -12,16 +12,15 @@ category: 分布式java基础应用和实践
 
 ##### 1.1 memcache简介及安装   
 + 1安装libevennt:
-	 wget https://github.com/libevent/libevent/archive/release-1.4.15-stable.tar.gz
 
-
-
+         wget https://github.com/libevent/libevent/archive/release-1.4.15-stable.tar.gz
 
 ##### 1.2 memcache API与分布式
 
 ##### 1.3 分布式session
 
 ![](http://7xsqwa.com1.z0.glb.clouddn.com/mnuo-largedistributed-1.2-memcache-session-manager.jpg)
+
 如图:前端用户请求经过随机分发之后,可能会命中后端任意的Web Server,并且Web Server也可能会因为各种不确定的原因宕机,在这种
 情况下,session是很难再集群间同步的,而通过将session以sessionId作为key,保存到后端的缓存集群中,使得不管请求如何分配,即便是WebServer宕机,也不会影响其他WebServer通过sessionId从Cache Server中获得session,这样实现了集群间的session同步,又提高了Web Server的容错性
 

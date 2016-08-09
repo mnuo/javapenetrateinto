@@ -3,6 +3,7 @@
  */
 package com.mnuocom.largedistributedweb.chapter3.numbersummer;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -14,13 +15,14 @@ public class MD5Demo {
 	/**
 	 * @param args
 	 * @throws NoSuchAlgorithmException 
+	 * @throws UnsupportedEncodingException 
 	 */
-	public static void main(String[] args) throws NoSuchAlgorithmException {
+	public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		String content = "123123";
 		MessageDigest md = MessageDigest.getInstance("MD5");
 		byte[] result = md.digest(content.getBytes());
-		System.out.println(MD5Util.byteToString(result));//16进制编码后
-		System.out.println(MD5Util.getMD5Code(content));
+		System.out.println(NusumUtil.byteToString(result));//16进制编码后
+		System.out.println(NusumUtil.getMD5Code(content));
 	}
 
 }
