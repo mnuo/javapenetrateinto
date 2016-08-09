@@ -73,3 +73,39 @@ RSA公钥加密算法是1977年由罗纳德·李维斯特（Ron Rivest）、阿�
 
 [RSAdemo]: https://github.com/mnuo/javapenetrateinto/tree/master/src/main/java/com/mnuocom/largedistributedweb/chapter3/rsa/RSADemo.java
 
+#### 4 数字签名
+将报文按双方约定的HASH算法计算得到一个固定位数的报文摘要。在数学上保证：只要改动报文中任何一位，重新计算出的报文摘要值就会与原先的值不相符。这样就保证了报文的不可更改性。将该报文摘要值用发送者的私人密钥加密，然后连同原报文一起发送给接收者，而产生的报文即称数字签名
+
+##### 4.1 MD5withRSA
+很容易理解,MD5withRSA 算法表示采用MD5算法生成需要发送正文的数字摘要,并使用RSA算法来对正文进行加密和解密.
+	
+	/**
+	 * 签名2
+	 * @param content
+	 * @param privateKey
+	 * @return
+	 * @throws Exception
+	 */
+	public static byte[] sign1(byte[] content, PrivateKey privateKey) throws Exception {
+		Signature signature = Signature.getInstance("MD5withRSA");
+		signature.initSign(privateKey);
+		signature.update(content);
+		return signature.sign();
+	}
+	/**
+	 * 验证2
+	 * @param content
+	 * @param sign
+	 * @param publicKey
+	 * @return
+	 * @throws Exception
+	 */
+	public static boolean verify1(byte[] content, byte[] sign, PublicKey publicKey) throws Exception{
+		Signature signature = Signature.getInstance("MD5withRSA");
+		signature.initVerify(publicKey);
+		signature.update(content);
+		return signature.verify(sign);
+	}
+
+##### 4.2 
+
