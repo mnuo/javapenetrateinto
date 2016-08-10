@@ -158,3 +158,73 @@ SSL全称Secure Socket Layer,即安全套接层.它是一种网络安全协议,�
 
 
 ##### 3.3 HTTPS WEB
+
++ 第一步:
+
+		C:\Program Files\Java\jdk1.8.0_71\bin>keytool -genkey -alias sawade -keyalg RSA -keystore d:/keys/apachejava
+		输入密钥库口令: 123123
+		您的名字与姓氏是什么?
+		  [Unknown]:  wade
+		您的组织单位名称是什么?
+		  [Unknown]:  saxon
+		您的组织名称是什么?
+		  [Unknown]:  saxon
+		您所在的城市或区域名称是什么?
+		  [Unknown]:  suzhou
+		您所在的省/市/自治区名称是什么?
+		  [Unknown]:  jiangsu
+		该单位的双字母国家/地区代码是什么?
+		  [Unknown]:  cn
+		CN=wade, OU=saxon, O=saxon, L=suzhou, ST=jiangsu, C=cn是否正确?
+		  [否]:  y
+
+		输入 <sawade> 的密钥口令
+		        (如果和密钥库口令相同, 按回车):
+
++ 第二步: 
+
+		C:\Program Files\Java\jdk1.8.0_71\bin>keytool -export -file d:/keys/sawade.crt -alias sawade -keystore d:/keys/apachejava
+		输入密钥库口令: 123123
+		存储在文件 <d:/keys/sawade.crt> 中的证书
+
++ 第三步:
+命令中不能有路径不能有空格 Program Files 换成: Progra~1
+
+		C:\Program Files\Java\jdk1.8.0_71\bin>keytool -import -keystore C:\Progra~1\Java\jdk1.8.0_71\jre\lib\security\cacerts -file D:/keys/sawade.crt -alias sawade
+		输入密钥库口令:123123
+		keytool 错误: java.io.IOException: Keystore was tampered with, or password was incorrect
+
+		C:\Program Files\Java\jdk1.8.0_71\bin>keytool -import -keystore C:\Progra~1\Java\jdk1.8.0_71\jre\lib\security\cacerts -file D:/keys/sawade.crt -alias sawade
+		输入密钥库口令:
+		所有者: CN=wade, OU=saxon, O=saxon, L=suzhou, ST=jiangsu, C=cn
+		发布者: CN=wade, OU=saxon, O=saxon, L=suzhou, ST=jiangsu, C=cn
+		序列号: ba31a53
+		有效期开始日期: Wed Aug 10 15:05:13 CST 2016, 截止日期: Tue Nov 08 15:05:13 CST 2016
+		证书指纹:
+		         MD5: 31:DE:75:FE:A0:6C:94:A9:52:0A:E4:F1:5B:44:B1:2F
+		         SHA1: BF:2C:32:A5:AA:36:25:33:64:BC:26:65:6F:DB:00:1A:89:83:B3:84
+		         SHA256: 24:FE:5D:8E:A7:D3:08:D6:9E:8A:A9:42:5B:4C:D7:84:92:C4:52:71:ED:4C:91:C2:17:4E:8C:73:63:95:2D:E2
+		         签名算法名称: SHA256withRSA
+		         版本: 3
+
+		扩展:
+
+		#1: ObjectId: 2.5.29.14 Criticality=false
+		SubjectKeyIdentifier [
+		KeyIdentifier [
+		0000: 55 91 32 AB 23 15 B9 EA   AE 49 21 EE 17 33 AC 29  U.2.#....I!..3.)
+		0010: 98 F7 44 FA                                        ..D.
+		]
+		]
+
+		是否信任此证书? [否]:  y
+		证书已添加到密钥库中
+
++ 第四步:
+修改: tomcat conf/server.xml 
+
+		<connector port="443" protocol="HTTP/1.1" SSLEnabled="true" 
+			maxThreads="150" scheme="https" secure="true"
+			clientAuth="false" sslProtocol="TLS"
+			keystoreFile="D:/keys/apachejava"
+			keystorePass="123123"/>
