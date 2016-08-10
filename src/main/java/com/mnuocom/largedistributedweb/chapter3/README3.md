@@ -10,7 +10,9 @@ category: 分布式java基础应用和实践
 这是一种常用的技术，用于证明某人知道某个秘密，而不要求他以容易被窃听的明文形式发送该秘密。
 
 原理:
-> 摘要认证与基础认证的工作原理很相似，用户先发出一个没有认证证书的请求，Web服务器回复一个带有WWW-Authenticate头的响应，指明访问所请求的资源需要证书。但是和基础认证发送以Base 64编码的用户名和密码不同，在摘要认证中服务器让客户选一个随机数（称作”nonce“），然后浏览器使用一个单向的加密函数生成一个消息摘要（message digest），该摘要是关于用户名、密码、给定的nonce值、HTTP方法，以及所请求的URL。消息摘要函数也被称为散列算法，是一种在一个方向上很容易计算，反方向却不可行的加密算法。与基础认证对比，解码基础认证中的Base 64是很容易办到的。在服务器口令中，可以指定任意的散列算法。在RFC 2617中，描述了以MD5散列函数作为默认算法。
+> 摘要认证与基础认证的工作原理很相似，用户先发出一个没有认证证书的请求，Web服务器回复一个带有WWW-Authenticate头的响应，指明访问所请求的资源需要证书。但是和基础认证发送以Base 64编码的用户名和密码不同，在摘要认证中服务器让客户选一个随机数（称作”nonce“），然后浏览器使用一个单向的加密函数生成一个消息摘要（message digest），该摘要是关于用户名、密码、给定的nonce值、HTTP方法，以及所请求的URL。消息摘要函数也被称为散列算法，是一种在一个方向上很容易计算，反方向却不可行的加密算法。与基础认证对比，解码基础认证中的Base 64是很容易办到的。在服务器口令中，可以指定任意的散列算法。在RFC 2617中，描述了以MD5散列函数作为默认算法。[digestauthenticationdemo] 
+
+[digestauthenticationdemo]: https://github.com/mnuo/javapenetrateinto/tree/master/src/main/java/com/mnuocom/largedistributedweb/chapter3/digestauthentication/DigestAuthenticationdemoDemo.java
 
 + 1 客户端参数摘要生成
 > 请求参数需要先排好序,服务端与客户端需要事先约定好排序的方式,否则生成的摘要可能就相差了,排好序后,将参数名称与参数值串起来,加上约定好的secret,生成带摘要的字符串,最后使用如MD5之类的摘要算法生成摘要串,当然摘要算法也需要事先约定好   
@@ -40,4 +42,58 @@ category: 分布式java基础应用和实践
 	boolean clientResult = validate(content, serverdigest);
 	System.out.println("客户端响应摘要检验结果: "+ clientResult);
 
+#### 2 签名认证
+签名认证的优势在于加密时使用的是私钥,而解密时使用的对外公开的公钥,私钥又私钥持有者保管,不需要泄露和传输给第三方,安全性大大提高,但相较于摘要认证,签名认证所使用的非对称加密算法将消耗更多的时间和硬件资源.[signauthenticationdemo] 
 
+[signauthenticationdemo]: https://github.com/mnuo/javapenetrateinto/tree/master/src/main/java/com/mnuocom/largedistributedweb/chapter3/signauthentication/SignAuthenticationdemoDemo.java
+
+	public static KeyPair keyPair = null;
+	public static PublicKey pubKey = null;
+	public static PrivateKey priKey = null;
+	static {
+		try {
+			keyPair = RSAUtil.getKeyPair();//共同的keyPair
+			String pubStr = RSAUtil.getPublicKey(keyPair);//生成公钥
+			String priStr = RSAUtil.getPrivateKey(keyPair);
+			
+
+			pubKey = RSAUtil.string2PublicKey(pubStr);
+			priKey = RSAUtil.string2PrivateKey(priStr);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * @param args
+	 * @throws Exception 
+	 */
+	public static void main(String[] args) throws Exception {
+		//1 客户端参数签名生成
+		Map<String, String> params = new HashMap<>();
+		params.put("username", "zhangsan");
+		params.put("password", "123123");
+		String sign = getSign(params);//生成的摘要
+		System.out.println("客户端生成的签名: " + sign);
+		
+		//2  服务端参数签名校验
+		boolean serverResult = validate(params, sign);
+		System.out.println("服务端参数签名校验结果: " + serverResult);
+		
+		//3  服务器端响应签名生成
+		String content = "登录成功";
+		String serverdigest = getSign(content);
+		System.out.println(" 服务器端响应签名: " + serverdigest);
+		
+		//4 客户端响应签名检验
+		boolean clientResult = validate(content, serverdigest);
+		System.out.println("客户端响应签名检验结果: "+ clientResult);
+
+	}
+
+
+#### 3 HTTPS
+
+##### 3.1 HTTPS协议原理
+> HTTPS全称是Hypertext Transfer Protocol over Secure Socket Layer 即基于SSL的HTTP协议,简单的说就是HTTP的安全版.HTTPS协议在HTTP协议与T
+CP协议之间增加了一层安全层,所有请求和响应数据在经过网络传输之前,都会先进行加密,然后再进行传输.SSL及其继任者TLS是为网络通信提供安全与数据完整性保障的一种安全协议,利用加密技术,以维护互联网数据传输的安全,验证通信双方的身份,防止数据在网络传输的过程中被拦截和窃听.
+> HTTPS既支持单项认证,也支持双向认证,所谓的单向认证即只校验服务端证书的有效性,而双向认证则表示既校验服务端证书的有效性,同时也需要校验客户端证书的有效性.
