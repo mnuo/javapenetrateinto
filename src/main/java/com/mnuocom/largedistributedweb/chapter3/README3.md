@@ -97,3 +97,64 @@ category: 分布式java基础应用和实践
 > HTTPS全称是Hypertext Transfer Protocol over Secure Socket Layer 即基于SSL的HTTP协议,简单的说就是HTTP的安全版.HTTPS协议在HTTP协议与T
 CP协议之间增加了一层安全层,所有请求和响应数据在经过网络传输之前,都会先进行加密,然后再进行传输.SSL及其继任者TLS是为网络通信提供安全与数据完整性保障的一种安全协议,利用加密技术,以维护互联网数据传输的安全,验证通信双方的身份,防止数据在网络传输的过程中被拦截和窃听.
 > HTTPS既支持单项认证,也支持双向认证,所谓的单向认证即只校验服务端证书的有效性,而双向认证则表示既校验服务端证书的有效性,同时也需要校验客户端证书的有效性.
+
+##### 3.2 SSL
+SSL全称Secure Socket Layer,即安全套接层.它是一种网络安全协议,是网景在其推出的Web浏览器中同时提出的,目的是为了保障网络通信的安全,校验通信双方的身份,加密传输的数据,如图:
+
+![](http://7xsqwa.com1.z0.glb.clouddn.com/mnuo-largedistributejava-3.5-ssl.jpg)
+
+![](http://7xsqwa.com1.z0.glb.clouddn.com/mnuo-largedistributejava-3.5-ssl2.jpg)
+
+
+参考网址[http://www.iteye.com/topic/1125183] [ssldemo]
+
+[http://www.iteye.com/topic/1125183]: http://www.iteye.com/topic/1125183
+[ssldemo]: https://github.com/mnuo/javapenetrateinto/tree/master/src/main/java/com/mnuocom/largedistributedweb/chapter3/ssl/
+
+		C:\Program Files\Java\jdk1.8.0_71\bin>keytool -genkey -v -alias bluedash-ssl-demo-server -keystore ./server_ks -dname "CN=localhost,OU=cn,O=cn,L=cn,ST=cn,C=cn"
+		正在为以下对象生成 1,024 位DSA密钥对和自签名证书 (SHA1withDSA) (有效期为 90 天):
+		         CN=localhost, OU=cn, O=cn, L=cn, ST=cn, C=cn
+		[正在存储./server_ks]
+
+		C:\Program Files\Java\jdk1.8.0_71\bin>keytool -genkey -v -alias bluedash-ssl-demo-client -keyalg RSA -keystore ./client_ks -dname "CN=localhost,OU=cn,O=cn,L=cn,
+		正在为以下对象生成 2,048 位RSA密钥对和自签名证书 (SHA256withRSA) (有效期为 90 天):
+		         CN=localhost, OU=cn, O=cn, L=cn, ST=cn, C=cn
+		[正在存储./client_ks]
+
+
+		C:\Program Files\Java\jdk1.8.0_71\bin>keytool -export -alias bluedash-ssl-demo-server -keystore ./server_ks -file server_key.cer
+		输入密钥库口令: server
+		存储在文件 <server_key.cer> 中的证书
+
+		C:\Program Files\Java\jdk1.8.0_71\bin>keytool -import -trustcacerts -alias bluedash-ssl-demo-server -file ./server_key.cer -keystore ./client_ks
+		输入密钥库口令: client
+		所有者: CN=localhost, OU=cn, O=cn, L=cn, ST=cn, C=cn
+		发布者: CN=localhost, OU=cn, O=cn, L=cn, ST=cn, C=cn
+		序列号: 474422ed
+		有效期开始日期: Wed Aug 10 14:21:17 CST 2016, 截止日期: Tue Nov 08 14:21:17 CST 2016
+		证书指纹:
+		         MD5: 4B:82:C3:EF:38:74:42:77:C7:74:CF:25:1C:3D:2E:A5
+		         SHA1: 03:41:51:E8:65:F3:D7:33:D6:93:34:F5:FE:47:B6:7D:98:8F:97:2B
+		         SHA256: 1C:E0:9E:5C:F4:CD:1D:63:48:D0:D0:F5:F1:5F:A8:7A:88:27:B6:41:A6:24:FB:64:E3:78:E4:25:EE:61:56:D2
+		         签名算法名称: SHA1withDSA
+		         版本: 3
+
+		扩展:
+
+		#1: ObjectId: 2.5.29.14 Criticality=false
+		SubjectKeyIdentifier [
+		KeyIdentifier [
+		0000: 9A 4C 9C 0C 73 80 48 1E   B7 AD A4 B2 83 76 3C 49  .L..s.H......v<I
+		0010: 96 CF 2F DC                                        ../.
+		]
+		]
+
+		是否信任此证书? [否]:  y
+		证书已添加到密钥库中
+
+		C:\Program Files\Java\jdk1.8.0_71\bin>keytool -export -alias bluedash-ssl-demo-client -keystore ./client_ks -file client_key.cer
+		输入密钥库口令: client
+		存储在文件 <client_key.cer> 中的证书
+
+
+##### 3.3 HTTPS WEB
