@@ -1,6 +1,6 @@
 ---
-title: 大型分布式网站--2 分布式系统基础设施--memcached
-date: 2016-08-011 16:12:08 
+title: 大型分布式网站--2 分布式系统基础设施(2 memcached)
+date: 2016-08-11 16:12:08 
 tags: 分布式java基础应用和实践
 category: 分布式java基础应用和实践
 ---
@@ -120,6 +120,10 @@ category: 分布式java基础应用和实践
 		System.out.println("incr: " + memCachedClient.get("key2"));
 
 #### 7 memcached-java-client AND Sring 
+参考[http://www.oschina.net/code/snippet_250396_9181]
+
+[http://www.oschina.net/code/snippet_250396_9181]: http://www.oschina.net/code/snippet_250396_9181
+
 + 1 sring 配置文件
 
     	<!-- 读取配置文件 memcached.properties -->  

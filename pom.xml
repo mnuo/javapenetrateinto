@@ -241,6 +241,10 @@
 			<artifactId>Memcached-Java-Client</artifactId>
 			<version>3.0.2</version>
 		</dependency>
-       
+       <!-- <dependency>
+			<groupId>de.javakaffee.msm</groupId>
+			<artifactId>memcached-session-manager</artifactId>
+			<version>1.9.7</version>
+		</dependency> -->
   </dependencies>
 </project>
