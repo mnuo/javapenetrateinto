@@ -1,6 +1,6 @@
 ---
 title: 大型分布式网站--2 分布式系统基础设施--memcached
-date: 2016-08-05 16:12:08 
+date: 2016-08-011 16:12:08 
 tags: 分布式java基础应用和实践
 category: 分布式java基础应用和实践
 ---
@@ -24,7 +24,7 @@ category: 分布式java基础应用和实践
 
 + 1 下载window版 
 
-	http://www.urielkatz.com/archive/detail/memcached-64-bit-windows/
+    http://www.urielkatz.com/archive/detail/memcached-64-bit-windows/
 
 + 2 安装:
 
@@ -120,5 +120,281 @@ category: 分布式java基础应用和实践
 		System.out.println("incr: " + memCachedClient.get("key2"));
 
 #### 7 memcached-java-client AND Sring 
++ 1 sring 配置文件
 
+    	<!-- 读取配置文件 memcached.properties -->  
+        <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
+    		<property name="order" value="1"/>  
+    	        <property name="ignoreUnresolvablePlaceholders" value="true"/>  
+    	        <property name="locations">  
+    	        <list>  
+    	            <value>classpath:memcached/memcached.properties</value>  
+    	        </list>  
+    	    </property>  
+        </bean>  
+         <!-- Memcached配置 -->  
+        <bean id="memcachedPool" class="com.whalin.MemCached.SockIOPool"  
+            factory-method="getInstance" init-method="initialize" destroy-method="shutDown">  
+            <property name="servers">  
+                <list>  
+                    <value>${memcached.server}</value>  
+                </list>  
+            </property>  
+            <property name="initConn">  
+                <value>${memcached.initConn}</value>  
+            </property>  
+            <property name="minConn">  
+                <value>${memcached.minConn}</value>  
+            </property>  
+            <property name="maxConn">  
+                <value>${memcached.maxConn}</value>  
+            </property>  
+            <property name="maintSleep">  
+                <value>${memcached.maintSleep}</value>  
+            </property>  
+            <property name="nagle">  
+                <value>${memcached.nagle}</value>  
+            </property>  
+            <property name="socketTO">  
+                <value>${memcached.socketTO}</value>  
+            </property>  
+        </bean> 
+
++ 2 memcached配置文件
+    	#######################Memcached配置#######################  
+    	#服务器地址  
+    	memcached.server=127.0.0.1:11211
+    	#初始化时对每个服务器建立的连接数目  
+    	memcached.initConn=20
+    	#每个服务器建立最小的连接数  
+    	memcached.minConn=10 
+    	#每个服务器建立最大的连接数  
+    	memcached.maxConn=50
+    	#自查线程周期进行工作，其每次休眠时间  
+    	memcached.maintSleep=3000
+    	#Socket的参数，如果是true在写数据时不缓冲，立即发送出去  
+    	memcached.nagle=false
+    	#Socket阻塞读取数据的超时时间  
+    	memcached.socketTO=3000
+
++ 3 封装类
+    	private static final Logger logger = Logger.getLogger(MemcachedUtils.class);  
+        private static MemCachedClient cachedClient;  
+        
+        static {  
+            if (cachedClient == null)  
+                cachedClient = new MemCachedClient();  
+        }  
+      
+        public MemcachedUtils() {  
+        }  
+      
+        /** 
+         * 向缓存添加新的键值对。如果键已经存在，则之前的值将被替换。 
+         * @param key 键 
+         * @param value 值 
+         * @return 
+         */  
+        public static boolean set(String key, Object value) {  
+            return setExp(key, value, null);  
+        }  
+      
+        /** 
+         * 向缓存添加新的键值对。如果键已经存在，则之前的值将被替换。 
+         * @param key 
+         * @param value 
+         * @param expire  过期时间 New Date(1000*10)：十秒后过期 
+         * @return 
+         */  
+        public static boolean set(String key, Object value, Date expire) {  
+            return setExp(key, value, expire);  
+        }  
+      
+        /** 
+         * 向缓存添加新的键值对。如果键已经存在，则之前的值将被替换。 
+         *  
+         * @param key 
+         * @param value 
+         * @param expire 过期时间 New Date(1000*10)：十秒后过期 
+         * @return 
+         */  
+        private static boolean setExp(String key, Object value, Date expire) {  
+            boolean flag = false;  
+            try {  
+                flag = cachedClient.set(key, value, expire);  
+            } catch (Exception e) {  
+                // 记录Memcached日志  
+                MemcachedLog.writeLog("Memcached set方法报错，key值：" + key + "\r\n" + exceptionWrite(e));  
+            }  
+            return flag;  
+        }  
+      
+        /** 
+         * 仅当缓存中不存在键时，add 命令才会向缓存中添加一个键值对。 
+         * @param key 
+         * @param value 
+         * @return 
+         */  
+        public static boolean add(String key, Object value) {  
+            return addExp(key, value, null);  
+        }  
+      
+        /** 
+         * 仅当缓存中不存在键时，add 命令才会向缓存中添加一个键值对。 
+         * @param key 
+         * @param value 
+         * @param expire 过期时间 New Date(1000*10)：十秒后过期 
+         * @return 
+         */  
+        public static boolean add(String key, Object value, Date expire) {  
+            return addExp(key, value, expire);  
+        }  
+      
+        /** 
+         * 仅当缓存中不存在键时，add 命令才会向缓存中添加一个键值对。 
+         * @param key 
+         * @param value 
+         * @param expire 过期时间 New Date(1000*10)：十秒后过期 
+         * @return 
+         */  
+        private static boolean addExp(String key, Object value, Date expire) {  
+            boolean flag = false;  
+            try {  
+                flag = cachedClient.add(key, value, expire);  
+            } catch (Exception e) {  
+                // 记录Memcached日志  
+                MemcachedLog.writeLog("Memcached add方法报错，key值：" + key + "\r\n" + exceptionWrite(e));  
+            }  
+            return flag;  
+        }  
+      
+        /** 
+         * 仅当键已经存在时，replace 命令才会替换缓存中的键。 
+         * @param key 
+         * @param value 
+         * @return 
+         */  
+        public static boolean replace(String key, Object value) {  
+            return replaceExp(key, value, null);  
+        }  
+      
+        /** 
+         * 仅当键已经存在时，replace 命令才会替换缓存中的键。 
+         * @param key 
+         * @param value 
+         * @param expire 过期时间 New Date(1000*10)：十秒后过期 
+         * @return 
+         */  
+        public static boolean replace(String key, Object value, Date expire) {  
+            return replaceExp(key, value, expire);  
+        }  
+      
+        /** 
+         * 仅当键已经存在时，replace 命令才会替换缓存中的键。 
+         * @param key 
+         * @param value 
+         * @param expire 过期时间 New Date(1000*10)：十秒后过期 
+         * @return 
+         */  
+        private static boolean replaceExp(String key, Object value, Date expire) {  
+            boolean flag = false;  
+            try {  
+                flag = cachedClient.replace(key, value, expire);  
+            } catch (Exception e) {  
+                MemcachedLog.writeLog("Memcached replace方法报错，key值：" + key + "\r\n" + exceptionWrite(e));  
+            }  
+            return flag;  
+        }  
+      
+        /** 
+         * get 命令用于检索与之前添加的键值对相关的值。 
+         * @param key 
+         * @return 
+         */  
+        public static Object get(String key) {  
+            Object obj = null;  
+            try {  
+                obj = cachedClient.get(key);  
+            } catch (Exception e) {  
+                MemcachedLog.writeLog("Memcached get方法报错，key值：" + key + "\r\n" + exceptionWrite(e));  
+            }  
+            return obj;  
+        }  
+      
+        /** 
+         * 删除 memcached 中的任何现有值。 
+         * @param key 
+         * @return 
+         */  
+        public static boolean delete(String key) {  
+            return deleteExp(key, null);  
+        }  
+      
+        /** 
+         * 删除 memcached 中的任何现有值。 
+         * @param key 
+         * @param expire 过期时间 New Date(1000*10)：十秒后过期 
+         * @return 
+         */  
+        public static boolean delete(String key, Date expire) {  
+            return deleteExp(key, expire);  
+        }  
+      
+        /** 
+         * 删除 memcached 中的任何现有值。 
+         * @param key 
+         * @param expire 过期时间 New Date(1000*10)：十秒后过期 
+         * @return 
+         */  
+        @SuppressWarnings("deprecation")
+    	private static boolean deleteExp(String key, Date expire) {  
+            boolean flag = false;  
+            try {  
+                flag = cachedClient.delete(key, expire);  
+            } catch (Exception e) {  
+                MemcachedLog.writeLog("Memcached delete方法报错，key值：" + key + "\r\n" + exceptionWrite(e));  
+            }  
+            return flag;  
+        }  
+      
+        /** 
+         * 清理缓存中的所有键/值对 
+         * @return 
+         */  
+        public static boolean flashAll() {  
+            boolean flag = false;  
+            try {  
+                flag = cachedClient.flushAll();  
+            } catch (Exception e) {  
+                MemcachedLog.writeLog("Memcached flashAll方法报错\r\n" + exceptionWrite(e));  
+            }  
+            return flag;  
+        }  
+      
+        /** 
+         * 返回异常栈信息，String类型 
+         * @param e 
+         * @return 
+         */  
+        private static String exceptionWrite(Exception e) {  
+            StringWriter sw = new StringWriter();  
+            PrintWriter pw = new PrintWriter(sw);  
+            e.printStackTrace(pw);  
+            pw.flush();  
+            return sw.toString();  
+        }  
+  
+
++ 4 测试方法:
+    	@Test
+        public void testMemcachedSpring() throws Exception { 
+        	new ClassPathXmlApplicationContext("memcached/spring-memcached.xml");
+            MemcachedUtils.set("aa", "bb", new Date(1000*10));  //10秒过期
+            Object obj = MemcachedUtils.get("aa");  
+            System.out.println("***************************");  
+            System.out.println(obj.toString());  
+            //sleep 15秒
+            Thread.sleep(15000);
+            System.out.println(MemcachedUtils.get("aa"));  //print null
+        }  
 
