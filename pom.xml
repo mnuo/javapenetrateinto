@@ -250,7 +250,14 @@
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
-			<version>2.9.0</version>
+			<version>2.7.2</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-juli -->
+		<dependency>
+		    <groupId>org.apache.tomcat</groupId>
+		    <artifactId>tomcat-juli</artifactId>
+		    <version>8.0.36</version>
+		</dependency>
+				
   </dependencies>
 </project>
