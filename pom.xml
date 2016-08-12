@@ -246,5 +246,11 @@
 			<artifactId>memcached-session-manager</artifactId>
 			<version>1.9.7</version>
 		</dependency> -->
+		<!-- Jedis is a blazingly small and sane Redis java client. -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.9.0</version>
+		</dependency>
   </dependencies>
 </project>
