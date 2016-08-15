@@ -258,6 +258,22 @@
 		    <artifactId>tomcat-juli</artifactId>
 		    <version>8.0.36</version>
 		</dependency>
+		<!-- jms's activeMQ jar -->
+		<!-- <dependency>
+            <groupId>javax.jms</groupId>
+            <artifactId>jms</artifactId>
+            <version>1.1</version>
+        </dependency> -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-core</artifactId>
+            <version>5.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-pool</artifactId>
+            <version>5.7.0</version>
+        </dependency>
 				
   </dependencies>
 </project>
